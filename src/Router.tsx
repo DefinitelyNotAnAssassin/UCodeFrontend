@@ -3,33 +3,38 @@ import { createBrowserRouter } from "react-router-dom";
 import { Applayout } from "./components/layouts/AppLayout";
 
 import NoMatch from "./pages/NoMatch";
-import Dashboard from "./pages/Dashboard";
-import Empty from "./pages/Empty";
-import Sample from "./pages/Sample";
+import LandingPage from "./pages/LandingPage";
+import CoursesPage from "./pages/Courses";
+import ResourcesPage from "./pages/Resources";
+import CommunityPage from "./pages/Community";
+import AboutPage from "./pages/About";
+
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Applayout />,
-        children: [
-            {
-                path: "",
-                element: <Dashboard />,
-            },
-            {
-                path: "sample",
-                element: <Sample />,
-            },
-            {
-                path: "empty",
-                element: <Empty />,
-            },
-        ],
+        element: <LandingPage />,
+    },
+    {
+        path: "/courses",   
+        element: <CoursesPage />,
+    },
+    {
+        path: "/resources",
+        element: <ResourcesPage />,
+    },
+    {
+        path: "/community",
+        element: <CommunityPage />,
+    },
+    {
+        path: "/about", 
+        element: <AboutPage />,
+
     },
     {
         path: "*",
         element: <NoMatch />,
-    },
-], {
-    basename: global.basename
-})
+    }
+
+])
