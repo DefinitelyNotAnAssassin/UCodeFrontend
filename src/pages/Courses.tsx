@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { Code, BookOpen, Database, Globe, Server, Smartphone } from "lucide-react"
 import Navbar from '@/components/navbar'
+import { BASE_URL } from '@/utils/UrlConstant'
+import axios from 'axios'
+import { useToast } from '@/hooks/use-toast'
 
 const categories = [
   { name: 'All', icon: BookOpen },
@@ -18,35 +21,58 @@ const categories = [
   { name: 'Programming Fundamentals', icon: Code },
 ]
 
-const courses = [
-  { id: 1, title: 'Introduction to HTML & CSS', category: 'Web Development', duration: '4 weeks', level: 'Beginner' },
-  { id: 2, title: 'JavaScript Fundamentals', category: 'Programming Fundamentals', duration: '6 weeks', level: 'Beginner' },
-  { id: 3, title: 'React.js Essentials', category: 'Web Development', duration: '8 weeks', level: 'Intermediate' },
-  { id: 4, title: 'Node.js and Express', category: 'Backend', duration: '6 weeks', level: 'Intermediate' },
-  { id: 5, title: 'SQL and Database Design', category: 'Database', duration: '5 weeks', level: 'Beginner' },
-  { id: 6, title: 'Mobile App Development with React Native', category: 'Mobile Development', duration: '10 weeks', level: 'Advanced' },
-  { id: 7, title: 'Python for Data Science', category: 'Programming Fundamentals', duration: '8 weeks', level: 'Intermediate' },
-  { id: 8, title: 'Advanced JavaScript and ES6+', category: 'Programming Fundamentals', duration: '6 weeks', level: 'Advanced' },
-  { id: 9, title: 'RESTful API Development', category: 'Backend', duration: '4 weeks', level: 'Intermediate' },
-  { id: 10, title: 'MongoDB and NoSQL Databases', category: 'Database', duration: '5 weeks', level: 'Intermediate' },
-]
-
 export default function CoursesPage() {
-  const [filteredCourses, setFilteredCourses] = useState(courses)
+  const [allCourses, setAllCourses] = useState([])
+  const [filteredCourses, setFilteredCourses] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [searchTerm, setSearchTerm] = useState('')
+  const { toast } = useToast()
 
   useEffect(() => {
-    const filtered = courses.filter(course => 
-      (selectedCategory === 'All' || course.category === selectedCategory) &&
-      course.title.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    setFilteredCourses(filtered)
-  }, [selectedCategory, searchTerm])
+    const fetchCourses = async () => {
+      const res = await axios.get(`${BASE_URL}/API/courses`)
+      const data = res.data
+      setAllCourses(data)
+      setFilteredCourses(data)
+      console.log(data)
+    }
+    fetchCourses()
+  }, [])
+
+  useEffect(() => {
+    const filterCourses = () => {
+      let filtered = allCourses
+
+      if (selectedCategory !== 'All') {
+        filtered = filtered.filter(course => course.category === selectedCategory)
+      }
+
+      if (searchTerm) {
+        filtered = filtered.filter(course => 
+          course.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      }
+
+      setFilteredCourses(filtered)
+    }
+
+    filterCourses()
+  }, [selectedCategory, searchTerm, allCourses])
+
+  const handleSubmit = (e, id) => {
+
+    axios.post(`${BASE_URL}/API/enroll`, {
+      course_id: id
+    })
+    .then((response) => {
+      toast({ title: "Success", description: response.data.message, variant: "success" })
+    })
+
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8">
-    <Navbar />
+      <Navbar />
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">UCode Courses</h1>
@@ -106,7 +132,8 @@ export default function CoursesPage() {
                     <p><strong>Level:</strong> {course.level}</p>
                   </CardContent>
                   <CardFooter className="mt-auto">
-                    <Button className="w-full">Enroll Now</Button>
+                    
+                    <Button className="w-full" onClick={() => handleSubmit(this, course.id)} disabled = {course.enrolled == true}>{course.enrolled == true ? "Enrolled" : "Enroll Now"}</Button>
                   </CardFooter>
                 </Card>
               </motion.div>

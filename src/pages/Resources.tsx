@@ -16,7 +16,7 @@ const topics = [
   {
     name: 'CSS',
     subtopics: ['Introduction', 'Selectors', 'Colors', 'Backgrounds', 'Borders', 'Margins', 'Padding', 'Height/Width', 'Box Model', 'Flexbox'],
-  },
+},
   {
     name: 'JavaScript',
     subtopics: ['Introduction', 'Variables', 'Data Types', 'Functions', 'Objects', 'Arrays', 'Loops', 'Conditionals', 'DOM Manipulation', 'Events'],
