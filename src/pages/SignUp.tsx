@@ -31,8 +31,8 @@ const formSchema = z.object({
     }),
     email: z.string().email({
         message: "Please enter a valid email address.",
-    }).regex(/@pup.edu.ph$/, {
-        message: "Please use a PUP email address.",
+    }).regex(/@tup.edu.ph$/, {
+        message: "Please use a tup email address.",
     }),
     password: z.string().min(6, {
         message: "Password must be at least 6 characters.",
@@ -167,7 +167,7 @@ export default function SignUpPage() {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input autoComplete="off" required type="email" placeholder="juandelacruz@pup.edu.ph" {...field} />
+                                        <Input autoComplete="off" required type="email" placeholder="juandelacruz@tup.edu.ph" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

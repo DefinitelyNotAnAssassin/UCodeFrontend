@@ -37,10 +37,13 @@ export default function LandingPage(){
     else{
         return (
             <div className="flex flex-col min-h-screen">
-              <Navbar />
+              <Navbar isTransparent = {true} />
                 <main className="flex-1">
-                    <section className="w-full h-screen bg-black flex flex-col items-center justify-center">
-                        <div className="container px-4 md:px-6">
+                    <section className="relative w-full h-screen flex flex-col items-center justify-center">
+                        <img src = "/tup_background.gif" className="absolute inset-0 object-fill w-full h-full z-0" />
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
+
+                        <div className="container px-4 md:px-6 z-10">
                             <div className="flex flex-col items-center space-y-4 text-center">
                                 <div className="space-y-2">
                                     <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">

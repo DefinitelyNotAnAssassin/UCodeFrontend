@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BookOpen, Menu, X } from 'lucide-react'
+import { BookOpen, Menu } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -15,20 +15,22 @@ const links = [
 ]
 
 const authLinks = [ 
-    { name: 'Dashboard', path: '/   ' },
+    { name: 'Dashboard', path: '/' },
     { name: 'Courses', path: '/courses' },
     { name: 'Resources', path: '/resources' },
-    { name: 'Sign Out', path: '/logout' }
+    { name: 'Games', path: '/games' },  
+    { name: 'Leaderboard', path: '/leaderboard' },
+    { name: 'Sign Out', path: '/logout' }   
 ]
 
-export default function Navbar() {
+export default function Navbar({ isTransparent = false }) {
     const [isOpen, setIsOpen] = useState(false)
     const auth = useAuth() 
 
     const userLinks = auth.user ? authLinks : links
 
     return (
-        <header className="px-4 lg:px-6 h-16 flex items-center justify-between">
+        <header className={`px-4 lg:px-6 h-16 flex items-center justify-between ${isTransparent ? 'bg-transparent z-50 absolute w-full text-white' : 'bg-white shadow-md'}`}>
             <Link className="flex items-center justify-center" to="/">
                 <BookOpen className="h-6 w-6 mr-2" />
                 <span className="font-bold">UCode</span>

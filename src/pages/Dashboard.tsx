@@ -161,7 +161,7 @@ export default function StudentDashboard() {
                                     >
                                         <div className="flex items-center space-x-4 mb-4">
                                             <Avatar className="w-20 h-20">
-                                                <AvatarImage src="/avatars/01.png" alt={user.username} />
+                                                <AvatarImage src = {`https://api.dicebear.com/9.x/pixel-art/svg?seed=${user.username}`} alt={user.username} />
                                                 <AvatarFallback>{user.first_name}{user.last_name}</AvatarFallback>
                                             </Avatar>
                                             <div>

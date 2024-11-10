@@ -19,6 +19,9 @@ import CourseDetailPage from "./pages/CourseDetail";
 import ActivityPage from "./pages/ActivityPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import CertificatePage from "./pages/CertificatePage";
+import OfflineCourseViewer from "./pages/OfflineCourses";
+import GamesPage from "./pages/Games";
+import Leaderboard from "./pages/Leaderboard";
 
 
 
@@ -40,6 +43,14 @@ export const router = createBrowserRouter([
     {
         path: "/activity/:id",
         element: <ActivityPage />,
+    },
+    {
+        path: "/games",
+        element: <GamesPage />,
+    },
+    {
+      path: "/leaderboard",
+      element: <Leaderboard />,  
     },
     {
         path: "/resources",
@@ -69,6 +80,10 @@ export const router = createBrowserRouter([
     {
         path: "/certificates/:id",
         element: <CertificatePage />,
+    },
+    {
+        path: "/offline",
+        element: <OfflineCourseViewer />,
     },
     {
         path: "*",
