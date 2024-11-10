@@ -9,8 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 import { Download, FileImage } from 'lucide-react'
-import axios from 'axios'
 import { BASE_URL } from '@/utils/UrlConstant'
+import axios from '@/utils/AuthAxios'
 
 export default function CertificatePage() {
   const [exportFormat, setExportFormat] = useState<'png' | 'jpg' | 'pdf'>('png')
@@ -27,30 +27,34 @@ export default function CertificatePage() {
     completionDate: ''
   })
 
-  useEffect(() => { 
+useEffect(() => { 
     const checkEligibity = async () => { 
         try{ 
             const response = await axios.get(`${BASE_URL}/API/checkEligibity/${id}`)
                 if (response.data.isEligible){ 
                     console.log('Eligible')
+              
                 }
                 else{ 
-                    // go back to the previous page 
-                    window.history.back()
+                    window.location.href = '/courses'
                 }
+  
         }
+    
         catch(err){ 
             console.log(err)
         }
 
     }
 
+    checkEligibity()
+
   }, [])
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/API/users`) // Adjust the endpoint as needed
+        const response = await axios.get(`${BASE_URL}/API/users`)
         setUserData({
           name: response.data.last_name + ', ' + response.data.first_name,
           id: response.data.id
@@ -62,7 +66,7 @@ export default function CertificatePage() {
 
     const fetchCourseData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/API/checkEligibity/${id}`)
+        const response = await axios.get(`${BASE_URL}/API/courses/${id}`)
         setCourseData({
           title: response.data.title,
           completionDate: new Date().toISOString().split('T')[0] // Use actual completion date if available

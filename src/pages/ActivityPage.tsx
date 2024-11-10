@@ -152,7 +152,8 @@ export default function ActivityPage() {
         description: `Your score: ${finalScore}/${activity!.maxScore}`,
         variant: "success",
       })
-      location.href = '/'
+
+      window.history.back()
     } catch (error) {
       console.error("Error submitting activity result:", error)
       toast({
@@ -166,7 +167,9 @@ export default function ActivityPage() {
   }
 
   const handleExitQuiz = () => {
-    window.location.href = '/'
+    if (window.confirm("Are you sure you want to exit the quiz?")) {
+      window.history.back()
+    }
   }
 
   if (!activity) {

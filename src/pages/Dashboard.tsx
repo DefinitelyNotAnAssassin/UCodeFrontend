@@ -16,8 +16,6 @@ import { BASE_URL } from '@/utils/UrlConstant'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-
-
 const recentActivity = [
     { id: 1, action: "Completed lesson", course: "Web Development Fundamentals", topic: "CSS Flexbox" },
     { id: 2, action: "Started new course", course: "Python for Data Science" },
@@ -116,13 +114,12 @@ export default function StudentDashboard() {
                             <ScrollArea className="h-[300px]">
                                
                               
-                                {enrolledCourses.map((course, index) => (
-                                    <Link to={`courses/${course.id}`}>
+                                {enrolledCourses.map((course,index) => (
+                                    <Link key={course.id + index} to={`courses/${course.id}`}>
                                          <motion.div 
-                                        key={course.id}
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: index * 0.1 }}
+                                        transition={{ delay: course.id * 0.1 }}
                                         className="mb-4 rounded p-2 hover:bg-gray-50 cursor-pointer"
                                     >
                                         <div className="flex justify-between items-center mb-2">
@@ -155,7 +152,7 @@ export default function StudentDashboard() {
                                 <TabsTrigger value="academic">Academic Info</TabsTrigger>
                                 <TabsTrigger value="preferences">Preferences</TabsTrigger>
                             </TabsList>
-                            <AnimatePresence mode="wait">
+                            <>
                                 <TabsContent value="personal">
                                     <motion.div
                                         initial={{ opacity: 0 }}
@@ -218,22 +215,22 @@ export default function StudentDashboard() {
                                     >
                                         <div className="mb-4">
                                             <h3 className="font-semibold mb-2">Preferred Languages:</h3>
-                                            <div className="flex flex-wrap gap-2">
+                                            <div className="flex flex-wrap gap-2"></div>
                                                 {user.preferred_languages.map((lang, index) => (
-                                                    <Badge key={index} variant="secondary">
+                                                    <Badge key={lang + index} variant="secondary">
                                                         <Languages className="mr-1 h-3 w-3" />
                                                         {lang}
                                                     </Badge>
                                                 ))}
                                             </div>
-                                        </div>
+                                   
                                         <div>
                                             <h3 className="font-semibold mb-2">Expectations:</h3>
                                             <p className="text-muted-foreground">{user.expectations}</p>
                                         </div>
                                     </motion.div>
                                 </TabsContent>
-                            </AnimatePresence>
+                            </>
                         </Tabs>
                     </CardContent>
                 </MotionCard>

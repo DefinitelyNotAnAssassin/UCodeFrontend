@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Clock, BarChart, Code, CheckCircle2 } from "lucide-react"
 import Navbar from '@/components/navbar'
-import axios from 'axios'
+import axios from '@/utils/AuthAxios'
 import { BASE_URL } from '@/utils/UrlConstant'
 import { useToast } from '@/hooks/use-toast'
 import { useNavigate } from 'react-router-dom'
@@ -90,7 +90,7 @@ export default function CourseDetailPage() {
     }
 
     const isSubtopicCompleted = (subtopic) => {
-        console.log(subtopic.activities)
+    
         return subtopic.activities.every(activity => activity.submission !== false)
     }
 
@@ -106,8 +106,7 @@ export default function CourseDetailPage() {
                 >
                     {course.title}
                     {course.completed && (
-                  
-                  <Button onClick={() => navigate(`/certificates/${course.id}`)}>
+                  <Button onClick={() => window.open(`/certificates/${course.id}`, '_blank')}>
                       Generate Certificate
                   </Button>
           

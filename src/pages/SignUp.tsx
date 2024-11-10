@@ -31,6 +31,8 @@ const formSchema = z.object({
     }),
     email: z.string().email({
         message: "Please enter a valid email address.",
+    }).regex(/@pup.edu.ph$/, {
+        message: "Please use a PUP email address.",
     }),
     password: z.string().min(6, {
         message: "Password must be at least 6 characters.",
@@ -93,6 +95,7 @@ export default function SignUpPage() {
                 toast({"description": "Registration successful. Please login to continue."})
                 auth.login(values.email, values.password)
                 auth.checkAuth()
+                window.location.href = '/'
             } 
             else {
                 toast({"description":"Account with the email already existing.", variant: "destructive"})
@@ -164,7 +167,7 @@ export default function SignUpPage() {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input autoComplete="off" required type="email" placeholder="johndoe@example.com" {...field} />
+                                        <Input autoComplete="off" required type="email" placeholder="juandelacruz@pup.edu.ph" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
